@@ -1,0 +1,39 @@
+[package]
+name = "bitena"
+authors = ["rustkin"]
+categories = ["data-structures", "memory-management"]
+description = "Simple lock-free Thread-safe Bump Arena for extemely fast memory allocations"
+documentation = "https://docs.rs/bitena"
+include = ["Cargo.toml", "src/**/*.rs", "README.md", "LICENSE"]
+keywords = ["allocator", "arena", "bump", "slab" ]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/rustkins/bitena"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[dev-dependencies]
+sysinfo = "0.38.2"
+
+[lib]
+doctest = true
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+
+[package.metadata]
+include = [
+       "src/**/*.rs",
+       "Cargo.toml",
+       "README.md",
+       "LICENSE",
+]
+exclude = [
+       "*.md",
+       "dev/**",
+       "expand.rs",
+       "target/**",
+]
