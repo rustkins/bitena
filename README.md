@@ -1,7 +1,8 @@
 # Bitena
 
-A small, extremely fast, lock-free thread-safe arena bump allocator that can hand out multiple
-mutable elements, structs, slices, or read-only &strs from a single pre-allocated block.
+A small, extremely fast, lock-free thread-safe dependency-free arena bump allocator that 
+can hand out multiple mutable elements, structs, slices, or read-only &strs from a 
+single pre-allocated block.
 
 ## What is an Arena?
 
@@ -110,7 +111,16 @@ useful:
       and vecs. See Rodeo and Bumpalo
  - Memory Layout Control, Rewinding, Thread-Local memory lakes, etc (See lake)
  - Detect Use after free - See arena-allocator
+ - Garbage Collected Arena - See gc-arena
 
+New Ideas:
+ - Stack Ops - Push and Pop functionality. See ?. Question about enforcing 
+      correct order, possibly requiring a Metadata addition.
+ - Bitena Scope/Partial Rewind
+      Could make 2 functions...  Save State (Returns current Next)
+      and Restore State (CAS Restore Next)
+      I think this requires a long-term lock for multi-threaded safety
+ 
 Bitena is the Simple, Fast, and Multi-threaded solution.
 
 # What NOT to do:
@@ -138,7 +148,7 @@ Bitena is the Simple, Fast, and Multi-threaded solution.
 
 ✅ - Do this instead:
 ```ignore
-     let v = bitena.try_alloc_slice(42u32, 10)?;   <==  Returns a 10 element MUTABLE slice
+     let v = bitena.try_alloc_slice(42u32, 10)?;   <==  Returns a 10 element MUTABLE fixed size slice
 ```
 
 ✅ - Do this instead, allocate a Box in the Arena, Box allocates/deallocates Vec from the heap.
